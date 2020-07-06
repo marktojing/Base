@@ -37,7 +37,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.github.marktojing:CommandUtils:0.0.2'
     implementation 'com.github.marktojing:XRecyclerView:0.0.1'
-    implementation 'com.github.marktojing:uilib:v0.0.4'
+    implementation 'com.github.marktojing:uilib:v0.0.5'
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation 'com.github.marktojing:DialogUI:0.0.1'
