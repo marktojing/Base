@@ -39,7 +39,7 @@ public class BaseRecyclerActivity extends BaseTitleActivity {
 
     @Override
     public void init() {
-        initView();
+        initViews();
         Intent intent = getIntent();
         BaseRecyclerEntity baseRecyclerEntity = (BaseRecyclerEntity) intent.getParcelableExtra(INTENT_DATA_RECYCLER_BASE);
         children = baseRecyclerEntity.getChildren();
@@ -55,7 +55,7 @@ public class BaseRecyclerActivity extends BaseTitleActivity {
 
     }
 
-    private void initView() {
+    private void initViews() {
         recycle=findViewById(R.id.recycle);
         linearLayout1=findViewById(R.id.linear_layout1);
     }
