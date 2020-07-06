@@ -38,12 +38,10 @@ public abstract class BaseTitleActivity extends BaseActivity {
     LinearLayout linearLayout;
     private Unbinder mUnbinder;
 
+    protected abstract int setLayout();
 
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public abstract void init();
+    public  void initView(){
         setContentView(R.layout.activity_base_title);
         headerBar = (HeadTitleBar) findViewById(R.id.header_bar);
         linearLayout = (LinearLayout) findViewById(R.id.linear_layout);
@@ -54,13 +52,7 @@ public abstract class BaseTitleActivity extends BaseActivity {
         });
         setLayoutInfo(setLayout());
         init();
-    }
-
-
-
-    protected abstract int setLayout();
-
-    public abstract void init();
+    };
 
     public void setTitle(@StringRes int title) {
         headerBar.setTitle(title);

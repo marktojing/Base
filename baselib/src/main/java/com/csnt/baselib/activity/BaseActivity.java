@@ -37,9 +37,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         StatusBarUtil.setDefaultStatusBar(this);
-        init();
+        initView();
     }
-    public abstract void init();
+    public abstract void initView();
     public void setAnimator(int type) {
         switch (type) {
             case LEFT_IN_LEFT_OUT:

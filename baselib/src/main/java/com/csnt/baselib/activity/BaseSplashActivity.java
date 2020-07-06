@@ -17,7 +17,7 @@ import android.widget.TextView;
  */
 public abstract class BaseSplashActivity extends BaseActivity {
     @Override
-    public void init() {
+    public void initView() {
         FrameLayout frameLayout = new FrameLayout(this);
         frameLayout.setForegroundGravity(Gravity.CENTER);
         ImageView imageView = new ImageView(this);
