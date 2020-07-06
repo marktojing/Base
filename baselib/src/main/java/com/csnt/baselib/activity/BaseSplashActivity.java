@@ -3,8 +3,13 @@ package com.csnt.baselib.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**
  * Created by sunrain
@@ -13,12 +18,25 @@ import android.widget.RelativeLayout;
 public abstract class BaseSplashActivity extends BaseActivity {
     @Override
     public void init() {
+        FrameLayout frameLayout = new FrameLayout(this);
+        frameLayout.setForegroundGravity(Gravity.CENTER);
         ImageView imageView = new ImageView(this);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         imageView.setLayoutParams(layoutParams);
-        imageView.setImageResource(setImageResource());
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        setContentView(imageView);
+        frameLayout.setLayoutParams(layoutParams);
+        imageView.setImageResource(setImageResource());
+        frameLayout.addView(imageView);
+        LinearLayout linearLayout = new LinearLayout(this);
+        LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParams1.bottomMargin=40;
+        linearLayout.setLayoutParams(layoutParams1);
+        linearLayout.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL);
+        TextView textView = new TextView(this);
+        textView.setText(setDevelopInfo());
+        linearLayout.addView(textView);
+        frameLayout.addView(linearLayout);
+        setContentView(frameLayout);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -30,8 +48,13 @@ public abstract class BaseSplashActivity extends BaseActivity {
                     }
                 });
             }
-        },3000);
+        },setDuration());
     }
+
+    protected abstract long setDuration();
+
+    protected abstract String setDevelopInfo();
+
     protected abstract Class<?> setNextClass();
     protected abstract int setImageResource();
     private Context getContext(){
