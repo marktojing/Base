@@ -49,7 +49,7 @@ public class BaseRecyclerActivity extends BaseTitleActivity {
         setTitle(baseRecyclerEntity.getName());
         XRecyclerViewUtil.setDefaultXRecycleViewTheme(this, recycle, baseRecyclerEntity.getRecyclerType());
 
-        BaseRecyclerAdapter iconNameAdapter = new IconNameAdapter(R.layout.fruit_item, children);
+        BaseRecyclerAdapter iconNameAdapter = new IconNameAdapter(children);
         iconNameAdapter.setOnItemChildClickListener(this::setItemClickListener);
         recycle.setAdapter(iconNameAdapter);
 

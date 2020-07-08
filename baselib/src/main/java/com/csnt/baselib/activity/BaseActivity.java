@@ -7,8 +7,10 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.csnt.baselib.R;
+import com.csnt.baselib.entity.BaseNameEntity;
 import com.csnt.baselib.entity.BaseOEntity;
 import com.csnt.baselib.entity.otherEntity.MainPageEntity;
+import com.csnt.baselib.fragmentdialog.BottomSingleSelectFragmentDialog;
 import com.csnt.dialoglib.AlertDialog;
 import com.csnt.dialoglib.SelectDialog;
 import com.csnt.dialoglib.StatusDialog;
@@ -172,5 +174,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             finish();
             setAnimator(LEFT_IN_RIGHT_OUT);
         }
+    }
+    public void showBottomSingleSelectDialog(String title, List<BaseNameEntity> list,BottomSingleSelectFragmentDialog.OnItemClickListener
+                                             onItemClickListener){
+        BottomSingleSelectFragmentDialog bottomSingleSelectFragmentDialog = new BottomSingleSelectFragmentDialog(title,list);
+        bottomSingleSelectFragmentDialog.setOnItemClickListener(onItemClickListener);
+        bottomSingleSelectFragmentDialog.show(getSupportFragmentManager(),title);
+
     }
 }

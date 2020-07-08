@@ -15,8 +15,8 @@ import androidx.annotation.Nullable;
  * Created Date 2020/6/11 12:00 AM
  */
 public class IconNameAdapter<T extends BaseRecyclerEntity> extends BaseRecyclerAdapter<T> {
-    public IconNameAdapter(int layoutResId, @Nullable List<T> data) {
-        super(layoutResId, data);
+    public IconNameAdapter(@Nullable List<T> data) {
+        super(R.layout.fruit_item, data);
     }
 
     @Override
