@@ -130,12 +130,15 @@ import butterknife.ButterKnife;
                 .setOnTabLoadListener(new EasyNavigationBar.OnTabLoadListener() { //Tab加载完毕回调
                     @Override
                     public void onTabLoadCompleteEvent() {
+                        onTabLoadCompleted();
 //                            navigationBar.setMsgPointCount(0, 7);
 //                            navigationBar.setMsgPointCount(1, 109);
 //                            navigationBar.setHintPoint(3, true);
                     }
                 });
     }
+
+    protected abstract void onTabLoadCompleted();
 
     protected abstract void onTabSelected(View view, int position);
 
