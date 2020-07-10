@@ -67,7 +67,7 @@ import butterknife.ButterKnife;
 
     }
 
-    private void setONCenterTabClick(View v) {
+    public void setONCenterTabClick(View v) {
 
     }
 
