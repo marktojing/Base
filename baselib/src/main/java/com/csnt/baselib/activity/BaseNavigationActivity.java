@@ -146,6 +146,6 @@ import butterknife.ButterKnife;
     }
 
     ;
-   abstract List<BaseNavigationEntity>  setData();
+  public abstract List<BaseNavigationEntity>  setData();
 
 }
