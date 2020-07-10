@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import com.csnt.baselib.R;
 import com.csnt.baselib.entity.BaseNameEntity;
@@ -16,8 +17,12 @@ import com.csnt.dialoglib.AlertDialog;
 import com.csnt.dialoglib.SelectDialog;
 import com.csnt.dialoglib.StatusDialog;
 import com.csnt.titlestatusbar.viewUtils.StatusBarUtil;
+import com.csnt.utils.activityManage.ActivityTaskManage;
 
+import java.lang.ref.PhantomReference;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +40,14 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseComp
 //    public final int LEFT_IN_RIGHT_OUT = 0x02;
 //    public final int RIGHT_IN_LEFT_OUT = 0x03;
     public final int RIGHT_IN_RIGHT_OUT = 0x04;
+    public final int MODE_SINGLE = 0x01;
+    public final int MODE_BACK = 0x00;
+    public final int MODE_DOUBLE = 0x02;
+    private int backMode=MODE_BACK;
+    private boolean isBack=false;
+    private Timer timer;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getSupportActionBar().hide();
@@ -176,4 +189,38 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseComp
         bottomSingleSelectFragmentDialog.show(getSupportFragmentManager(),title);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        quitApp();
+    }
+
+    public  void quitApp(){
+        switch (backMode){
+            default:
+            case MODE_BACK:
+                finish();
+                break;
+            case MODE_SINGLE:
+                finish();
+                System.exit(0);
+                break;
+            case MODE_DOUBLE:
+                isBack=true;
+                Toast.makeText(this,"再点一次退出",Toast.LENGTH_SHORT).show();
+                if(timer==null){
+                    timer=new Timer();
+                }
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        isBack=false;
+                    }
+                },2000);
+                break;
+
+
+        };
+    };
 }
