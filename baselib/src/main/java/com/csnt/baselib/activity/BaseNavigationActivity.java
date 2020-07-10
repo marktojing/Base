@@ -11,6 +11,7 @@ import com.csnt.baselib.entity.BaseNavigationEntity;
 import com.next.easynavigation.view.EasyNavigationBar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.RequiresApi;
@@ -28,7 +29,6 @@ import butterknife.ButterKnife;
     private int[]  selectIcon;
     private List<Fragment>  fragments;
     private List<BaseNavigationEntity>  baseNavigationEntities;
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void initView() {
         setContentView(R.layout.activity_base_navigation);
@@ -113,7 +113,6 @@ import butterknife.ButterKnife;
                 .build();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void distributeData() {
         List<String> tabTextArr;
         List<Integer> normalArr;
@@ -130,8 +129,13 @@ import butterknife.ButterKnife;
                 fragments.add(baseNavigationEntity.getFragment());
             }
             tabText= (String[]) tabTextArr.toArray();
-            normalIcon=normalArr.stream().mapToInt(Integer::valueOf).toArray();       ;
-            selectIcon=selectArr.stream().mapToInt(Integer::valueOf).toArray();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                normalIcon=normalArr.stream().mapToInt(Integer::valueOf).toArray();
+                selectIcon=selectArr.stream().mapToInt(Integer::valueOf).toArray();
+            }else{
+
+            }
+
 
         }else{
             tabText=new String[]{};
