@@ -115,7 +115,6 @@ import butterknife.ButterKnife;
                 .msgPointTextSize(9)  //数字消息中字体大小
                 .msgPointSize(18)    //数字消息红色背景的大小
                 .setOnCenterTabClickListener(new EasyNavigationBar.OnCenterTabSelectListener() {
-
                     @Override
                     public boolean onCenterTabSelectEvent(View view) {
 //                        ToastUtils.showShort("测试111");
