@@ -84,10 +84,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseComp
     }
 
     ;
+
     public void showStatusDialog(String msg, int type) {
         showStatusDialog(msg,type,false);
     }
-
+    @Override
     public void showStatusDialog(String msg, int type, boolean isCancel) {
         if (statusDialog != null) {
             dismissStatusDialog();
@@ -101,13 +102,13 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseComp
                     .setType(type).show();
         }
     }
-
+    @Override
     public void dismissStatusDialog() {
         if (statusDialog != null) {
             statusDialog.dismiss();
         }
     }
-
+    @Override
     public void showSelectDialog(String title, List<SelectDialog.SelectItem> selectItems, SelectDialog.OnItemClick onItemClick) {
         SelectDialog selectDialog = new SelectDialog(this, selectItems);
         selectDialog.setTitle(title);
@@ -117,7 +118,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseComp
         });
         selectDialog.show();
     }
-
+    @Override
     public void showAlertDialog(String title, String content, String rightStr,
                                 String leftStr,
                                 boolean isCancel,

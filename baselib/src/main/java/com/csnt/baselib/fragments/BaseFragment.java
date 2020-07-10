@@ -31,6 +31,7 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment implements BaseComponentInterface {
     private StatusDialog statusDialog;
     private  Unbinder mUnbinder;
+    public View mContentView;
     @Override
     public void showStatusDialog(String msg, int type, boolean isCancel) {
         if (statusDialog != null) {
@@ -110,7 +111,7 @@ public abstract class BaseFragment extends Fragment implements BaseComponentInte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
-       View mContentView = inflater.inflate(getLayout(), container, false);
+        mContentView = inflater.inflate(getLayout(), container, false);
         mUnbinder = ButterKnife.bind(this, mContentView);
         beforeInitView();
         initView(mContentView, savedInstanceState);

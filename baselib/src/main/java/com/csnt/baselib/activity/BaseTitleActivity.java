@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.csnt.baselib.R;
+import com.csnt.baselib.interfaces.BaseTitleInterface;
 import com.csnt.dialoglib.AlertDialog;
 import com.csnt.dialoglib.SelectDialog;
 import com.csnt.dialoglib.StatusDialog;
@@ -33,7 +34,7 @@ import butterknife.Unbinder;
  * Created Date 2020/6/8 3:58 PM
  */
 @SuppressLint("Registered")
-public abstract class BaseTitleActivity extends BaseActivity {
+public abstract class BaseTitleActivity extends BaseActivity implements BaseTitleInterface {
     HeadTitleBar headerBar;
     LinearLayout linearLayout;
     private Unbinder mUnbinder;

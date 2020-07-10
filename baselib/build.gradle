@@ -42,4 +42,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation 'com.github.marktojing:DialogUI:0.0.2'
     implementation 'androidx.cardview:cardview:1.0.0'
+    //底部导航栏
+    implementation 'com.github.marktojing:EasyNavigation:2.0.5'
 }
