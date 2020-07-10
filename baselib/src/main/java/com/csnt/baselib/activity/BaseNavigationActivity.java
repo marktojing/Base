@@ -165,7 +165,7 @@ import butterknife.ButterKnife;
             for (BaseNavigationEntity baseNavigationEntity : baseNavigationEntities) {
                 tabTextArr.add(baseNavigationEntity.getText());
                 normalArr.add(baseNavigationEntity.getUnSelectIcon());
-                selectArr.add(baseNavigationEntity.getUnSelectIcon());
+                selectArr.add(baseNavigationEntity.getSelectIcon());
                 fragments.add(baseNavigationEntity.getFragment());
             }
             tabText= tabTextArr.toArray(new String[0]);
