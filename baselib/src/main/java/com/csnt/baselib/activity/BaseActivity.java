@@ -11,6 +11,7 @@ import com.csnt.baselib.entity.BaseNameEntity;
 import com.csnt.baselib.entity.BaseOEntity;
 import com.csnt.baselib.entity.otherEntity.MainPageEntity;
 import com.csnt.baselib.fragmentdialog.BottomSingleSelectFragmentDialog;
+import com.csnt.baselib.interfaces.BaseComponentInterface;
 import com.csnt.dialoglib.AlertDialog;
 import com.csnt.dialoglib.SelectDialog;
 import com.csnt.dialoglib.StatusDialog;
@@ -28,11 +29,11 @@ import androidx.appcompat.app.AppCompatActivity;
  * Created Date 2020/6/8 3:58 PM
  */
 @SuppressLint("Registered")
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements BaseComponentInterface {
     private StatusDialog statusDialog;
     public final int LEFT_IN_LEFT_OUT = 0x01;
-    public final int LEFT_IN_RIGHT_OUT = 0x02;
-    public final int RIGHT_IN_LEFT_OUT = 0x03;
+//    public final int LEFT_IN_RIGHT_OUT = 0x02;
+//    public final int RIGHT_IN_LEFT_OUT = 0x03;
     public final int RIGHT_IN_RIGHT_OUT = 0x04;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,17 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     ;
     public void showStatusDialog(String msg, int type) {
-        if (statusDialog != null) {
-            dismissStatusDialog();
-        }
-        if (!TextUtils.isEmpty(msg)) {
-            statusDialog = StatusDialog.with(this).setCancelable(false)
-                    .setPrompt(msg)
-                    .setType(type).show();
-        } else {
-            statusDialog = StatusDialog.with(this).setCancelable(false)
-                    .setType(type).show();
-        }
+        showStatusDialog(msg,type,false);
     }
 
     public void showStatusDialog(String msg, int type, boolean isCancel) {
@@ -133,7 +124,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                                 View.OnClickListener onClickListenerR,
                                 View.OnClickListener onClickListenerL) {
         AlertDialog.with(this)
-                .setCancelable(true)
+                .setCancelable(isCancel)
                 .setContent(content)
                 .setTitle(title)
                 .setPositiveButton(rightStr, onClickListenerR).setNegativeButton(leftStr, onClickListenerL).show();
@@ -145,7 +136,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param isFinish 是否结束当前的Activity (true 结束，false 不结束)
      * @param bundle   不需要传参数的时候传入空即可
      */
-    protected void turnActivity(@NonNull Class class1, @NonNull boolean isFinish, Bundle bundle) {
+    @Override
+    public void turnActivity(@NonNull Class class1, @NonNull boolean isFinish, Bundle bundle) {
         Intent intent = new Intent();
         intent.setClass(this, class1);
         if (bundle != null) {
@@ -175,6 +167,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             setAnimator(LEFT_IN_RIGHT_OUT);
         }
     }
+    @Override
     public void showBottomSingleSelectDialog(String title, List<BaseNameEntity> list,BottomSingleSelectFragmentDialog.OnItemClickListener
                                              onItemClickListener){
         BottomSingleSelectFragmentDialog bottomSingleSelectFragmentDialog = new BottomSingleSelectFragmentDialog(title,list);
