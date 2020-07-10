@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.csnt.baselib.R;
 import com.csnt.baselib.entity.BaseNavigationEntity;
+import com.csnt.baselib.entity.otherEntity.NavigationCenterIconEntity;
 import com.next.easynavigation.view.EasyNavigationBar;
 
 import java.util.ArrayList;
@@ -29,30 +30,67 @@ import butterknife.ButterKnife;
     private int[]  selectIcon;
     private List<Fragment>  fragments;
     private List<BaseNavigationEntity>  baseNavigationEntities;
+    private float tabIconSize=20;
+    private NavigationCenterIconEntity navigationCenterIconEntity;
     @Override
     public void initView() {
         setContentView(R.layout.activity_base_navigation);
         baseNavigationEntities=setData();
+        navigationCenterIconEntity=setCenterIcon();
         distributeData();
         navigationBar= findViewById(R.id.navigation);
-        navigationBar.defaultSetting()  //恢复默认配置、可用于重绘导航栏
+        setNavigationBar();
+        if(navigationCenterIconEntity==null){
+            //普通模式
+            navigationBar.mode(EasyNavigationBar.NavigationMode.MODE_NORMAL).build();   //默认MODE_NORMAL 普通模式  //MODE_ADD 带加号模式
+            //.setupWithViewPager() ViewPager或ViewPager2
+
+        }else{
+            //中间有图标的模式
+            navigationBar.mode(EasyNavigationBar.NavigationMode.MODE_ADD)
+                    .centerTextStr(navigationCenterIconEntity.getText())
+                    .centerImageRes(navigationCenterIconEntity.getCenterIcon())
+                    .centerIconSize(navigationCenterIconEntity.getIconSize())    //中间加号图片的大小 36
+                    .centerLayoutHeight(30)   //包含加号的布局高度 背景透明  所以加号看起来突出一块
+                    .centerLayoutRule(EasyNavigationBar.RULE_BOTTOM) //RULE_CENTER 加号居中addLayoutHeight调节位置 EasyNavigationBar.RULE_BOTTOM 加号在导航栏靠下
+                    .centerLayoutBottomMargin(navigationCenterIconEntity.getBottomMargin())   //加号到底部的距离10
+                    .centerAlignBottom(true)  //加号是否同Tab文字底部对齐  RULE_BOTTOM时有效；
+                    .centerTextTopMargin(8)  //加号文字距离加号图片的距离
+                    .centerTextSize(3)      //加号文字大小
+                    .centerNormalTextColor(Color.parseColor("#3c3c3c"))    //加号文字未选中时字体颜色
+                    .centerSelectTextColor(Color.parseColor("#ac3a18"))    //加号文字选中时字体颜色
+                    .setOnCenterTabClickListener(v->{
+                        setONCenterTabClick(v);
+                        return false;
+                    }).build();
+        }
+
+    }
+
+    private void setONCenterTabClick(View v) {
+
+    }
+
+    private void setNavigationBar() {
+        navigationBar = navigationBar.defaultSetting()  //恢复默认配置、可用于重绘导航栏
                 .titleItems(tabText)      //  Tab文字集合  只传文字则只显示文字
                 .normalIconItems(normalIcon)   //  Tab未选中图标集合
                 .selectIconItems(selectIcon)   //  Tab选中图标集合
                 .fragmentList(fragments)       //  fragment集合
                 .fragmentManager(getSupportFragmentManager())
-                .iconSize(20)     //Tab图标大小
+                .iconSize(tabIconSize)     //Tab图标大小
                 .tabTextSize(10)   //Tab文字大小
                 .tabTextTop(2)     //Tab文字距Tab图标的距离
-                .normalTextColor(Color.parseColor("#666666"))   //Tab未选中时字体颜色
-                .selectTextColor(Color.parseColor("#333333"))   //Tab选中时字体颜色
+                .normalTextColor(Color.parseColor("#3c3c3c"))   //Tab未选中时字体颜色
+                .selectTextColor(Color.parseColor("#ac3a18"))   //Tab选中时字体颜色
                 .scaleType(ImageView.ScaleType.CENTER_INSIDE)  //同 ImageView的ScaleType
-                .navigationBackground(Color.parseColor("#80000000"))   //导航栏背景色
+                .navigationBackground(Color.parseColor("#ffffff"))   //导航栏背景色
                 .setOnTabClickListener(new EasyNavigationBar.OnTabClickListener() {
                     @Override
                     public boolean onTabSelectEvent(View view, int position) {
                         //Tab点击事件  return true 页面不会切换
 //                        ToastUtils.showShort("测试"+position);
+                        onTabSelected(view,position);
 
                         return false;
                     }
@@ -65,16 +103,9 @@ import butterknife.ButterKnife;
                 })
                 .smoothScroll(false)  //点击Tab  Viewpager切换是否有动画
                 .canScroll(true)    //Viewpager能否左右滑动
-                .mode(EasyNavigationBar.NavigationMode.MODE_ADD)   //默认MODE_NORMAL 普通模式  //MODE_ADD 带加号模式
-                .centerTextStr("发现")
-                .centerImageRes(R.drawable.ic_error)
-                .centerIconSize(36)    //中间加号图片的大小
-                .centerLayoutHeight(30)   //包含加号的布局高度 背景透明  所以加号看起来突出一块
                 .navigationHeight(60)  //导航栏高度
-                .lineHeight(1)         //分割线高度  默认1px
-                .lineColor(Color.parseColor("#ff0000"))
-                .centerLayoutRule(EasyNavigationBar.RULE_BOTTOM) //RULE_CENTER 加号居中addLayoutHeight调节位置 EasyNavigationBar.RULE_BOTTOM 加号在导航栏靠下
-                .centerLayoutBottomMargin(10)   //加号到底部的距离
+                .lineHeight(1)         //分割线高度  默认1
+                .lineColor(Color.parseColor("#3c3c3c"))
                 .hasPadding(true)    //true ViewPager布局在导航栏之上 false有重叠
                 .hintPointLeft(-3)  //调节提示红点的位置hintPointLeft hintPointTop（看文档说明）
                 .hintPointTop(-3)
@@ -83,10 +114,7 @@ import butterknife.ButterKnife;
                 .msgPointTop(-10)
                 .msgPointTextSize(9)  //数字消息中字体大小
                 .msgPointSize(18)    //数字消息红色背景的大小
-                .centerAlignBottom(true)  //加号是否同Tab文字底部对齐  RULE_BOTTOM时有效；
-                .centerTextTopMargin(8)  //加号文字距离加号图片的距离
-                .centerTextSize(3)      //加号文字大小
-                .setOnCenterTabClickListener(new EasyNavigationBar.OnCenterTabSelectListener(){
+                .setOnCenterTabClickListener(new EasyNavigationBar.OnCenterTabSelectListener() {
 
                     @Override
                     public boolean onCenterTabSelectEvent(View view) {
@@ -94,8 +122,6 @@ import butterknife.ButterKnife;
                         return false;
                     }
                 })
-                .centerNormalTextColor(Color.parseColor("#ff0000"))    //加号文字未选中时字体颜色
-                .centerSelectTextColor(Color.parseColor("#00ff00"))    //加号文字选中时字体颜色
                 .setMsgPointColor(Color.RED) //数字消息、红点背景颜色
                 .setMsgPointMoreRadius(5) //消息99+角度半径
                 .setMsgPointMoreWidth(50)  //消息99+宽度
@@ -104,13 +130,19 @@ import butterknife.ButterKnife;
                 .setOnTabLoadListener(new EasyNavigationBar.OnTabLoadListener() { //Tab加载完毕回调
                     @Override
                     public void onTabLoadCompleteEvent() {
-                        navigationBar.setMsgPointCount(0, 7);
-                        navigationBar.setMsgPointCount(1, 109);
-                        navigationBar.setHintPoint(4, true);
+//                            navigationBar.setMsgPointCount(0, 7);
+//                            navigationBar.setMsgPointCount(1, 109);
+//                            navigationBar.setHintPoint(3, true);
                     }
-                })
-                //.setupWithViewPager() ViewPager或ViewPager2
-                .build();
+                });
+    }
+
+    protected abstract void onTabSelected(View view, int position);
+
+    protected abstract NavigationCenterIconEntity setCenterIcon();
+
+    private void setTabIconSize(float size) {
+        tabIconSize=size;
     }
 
     private void distributeData() {
