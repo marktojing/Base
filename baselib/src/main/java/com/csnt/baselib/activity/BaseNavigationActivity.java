@@ -139,6 +139,12 @@ import butterknife.ButterKnife;
     }
 
     protected abstract void onTabLoadCompleted();
+    public void setMsgPointCount(int position,int count){
+        navigationBar.setMsgPointCount(position, count);
+    }
+    public void setMsgPoinsetHintPointtCount(int position,boolean b){
+        navigationBar.setHintPoint(position, b);
+    }
 
     protected abstract void onTabSelected(View view, int position);
 
@@ -163,7 +169,7 @@ import butterknife.ButterKnife;
                 selectArr.add(baseNavigationEntity.getUnSelectIcon());
                 fragments.add(baseNavigationEntity.getFragment());
             }
-            tabText= (String[]) tabTextArr.toArray();
+            tabText= tabTextArr.toArray(new String[0]);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 normalIcon=normalArr.stream().mapToInt(Integer::valueOf).toArray();
                 selectIcon=selectArr.stream().mapToInt(Integer::valueOf).toArray();
