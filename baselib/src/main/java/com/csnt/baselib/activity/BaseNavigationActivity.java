@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  * Created by sunrain
  * Created Date 2020/7/10 11:13 AM
  */
- abstract class BaseNavigationActivity extends BaseActivity {
+ public abstract class BaseNavigationActivity extends BaseActivity {
     public EasyNavigationBar navigationBar;
     private String[]  tabText;
     private int[]  normalIcon;
