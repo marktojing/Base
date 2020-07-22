@@ -26,11 +26,10 @@ import butterknife.ButterKnife;
  public abstract class BaseNavigationActivity extends BaseActivity {
     public EasyNavigationBar navigationBar;
     private String[]  tabText;
-    private int[]  normalIcon;
-    private int[]  selectIcon;
+    private Integer[]  normalIcon;
     private List<Fragment>  fragments;
     private List<BaseNavigationEntity>  baseNavigationEntities;
-    private float tabIconSize=20;
+    private int tabIconSize=20;
     private NavigationCenterIconEntity navigationCenterIconEntity;
     @Override
     public void initView() {
@@ -60,22 +59,25 @@ import butterknife.ButterKnife;
                     .centerNormalTextColor(Color.parseColor("#3c3c3c"))    //加号文字未选中时字体颜色
                     .centerSelectTextColor(Color.parseColor("#ac3a18"))    //加号文字选中时字体颜色
                     .setOnCenterTabClickListener(v->{
-                        setONCenterTabClick(v);
+                        setOnCenterTabClick(v);
                         return false;
                     }).build();
         }
+        initOtherView();
 
     }
 
-    public void setONCenterTabClick(View v) {
+    protected abstract void initOtherView();
+
+    public void setOnCenterTabClick(View v) {
 
     }
 
     private void setNavigationBar() {
         navigationBar = navigationBar.defaultSetting()  //恢复默认配置、可用于重绘导航栏
                 .titleItems(tabText)      //  Tab文字集合  只传文字则只显示文字
-                .normalIconItems(normalIcon)   //  Tab未选中图标集合
-                .selectIconItems(selectIcon)   //  Tab选中图标集合
+                .setIconItems(normalIcon)   //  Tab未选中图标集合
+//                .selectIconItems(selectIcon)   //  Tab选中图标集合
                 .fragmentList(fragments)       //  fragment集合
                 .fragmentManager(getSupportFragmentManager())
                 .iconSize(tabIconSize)     //Tab图标大小
@@ -149,7 +151,7 @@ import butterknife.ButterKnife;
 
     protected abstract NavigationCenterIconEntity setCenterIcon();
 
-    private void setTabIconSize(float size) {
+    private void setTabIconSize(int size) {
         tabIconSize=size;
     }
 
@@ -169,18 +171,10 @@ import butterknife.ButterKnife;
                 fragments.add(baseNavigationEntity.getFragment());
             }
             tabText= tabTextArr.toArray(new String[0]);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                normalIcon=normalArr.stream().mapToInt(Integer::valueOf).toArray();
-                selectIcon=selectArr.stream().mapToInt(Integer::valueOf).toArray();
-            }else{
-
-            }
-
-
+            normalIcon=normalArr.toArray(new Integer[0]);
         }else{
             tabText=new String[]{};
-            normalIcon=new int[]{};
-            selectIcon=new int[]{};
+            normalIcon=new Integer[]{};
             fragments=new ArrayList<>();
         }
     }

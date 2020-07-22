@@ -10,7 +10,7 @@ public class NavigationCenterIconEntity {
     private String text;
     @DrawableRes
     private int centerIcon;
-    private float iconSize;
+    private int iconSize;
     private int bottomMargin;
 
     public String getText() {
@@ -29,11 +29,11 @@ public class NavigationCenterIconEntity {
         this.centerIcon = centerIcon;
     }
 
-    public float getIconSize() {
+    public int getIconSize() {
         return iconSize;
     }
 
-    public void setIconSize(float iconSize) {
+    public void setIconSize(int iconSize) {
         this.iconSize = iconSize;
     }
 
